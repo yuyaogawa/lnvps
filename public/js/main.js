@@ -2,6 +2,8 @@ const url = './';
 let qrcode;
 
 function topup(){
+    $('#generate').prop('hidden', true);
+    $('#loading').prop('hidden', false);
     $('.topup_from').collapse('hide');
     var amount = $('#topup_amount').val();
     var data ={
@@ -24,6 +26,8 @@ function topup(){
                 $('#invoice').val(xhr.data.invoice);
                 getQRcode(xhr.data.invoice);
             }
+            $('#generate').prop('hidden', false);
+            $('#loading').prop('hidden', true);
         });
 }
 

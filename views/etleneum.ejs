@@ -1,0 +1,78 @@
+<style>
+#banner-ad-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 50px !important;
+  max-height: 120px !important;
+  border-style: solid;
+  border-color: var(--Gray);
+  border-width: 2px;
+  padding: 2px 4px;
+  text-decoration: none;
+  position: relative;
+}
+#banner-ad-banner::before {
+  content: 'advertisement';
+  background-color: var(--White);
+  padding: 4px;
+  position: absolute;
+  left: 0;
+  top: -14px;
+  right: 0;
+  margin: 0 auto;
+  display: inline-block;
+  width: 140px;
+  text-align: center;
+}
+#banner-ad-banner img {
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 100px !important;
+}
+</style>
+<script id="banner-ad">
+(function(b, placeholder, w, h) {
+  fetch(
+    `https://etleneum.com/~/contract/cko001spd3/state/.current_ads.${b}`
+  )
+    .then(r => r.json())
+    .then(({value: ad}) => {
+      let a = document.createElement('a')
+      let s = document.getElementById('banner-ad')
+      s.parentNode.insertBefore(a, s)
+      a.id = 'banner-ad-banner'
+      a.style.width = `${w}%`
+      a.style.height = `${h}px`
+      a.onclick = "gtag('event', 'click', {'event_category': 'link','event_label': 'banner on stats page'});"
+
+      if (!ad) {
+        a.href = `https://banners.etleneum.com/#/${b}`
+        a.innerHTML = placeholder
+        return
+      }
+
+      let {text, image_url, link} = ad
+      a.href = link
+      if (image_url) {
+        let c = document.createElement('img')
+        c.src = image_url
+        c.style.witdh = `${w}%`
+        c.style.height = `${h}px`
+        a.appendChild(c)
+      } else {
+        a.innerText = text
+        a.style.display = 'flex'
+        a.style.justifyContent = 'center'
+        a.style.alignItems = 'center'
+      }
+    })
+})(
+  'ckakq9ltk001wn5016th132nz',
+  'Advertise in 1H units. Bitcoin via LN accepeted here',
+  100,
+  100
+)
+</script>
